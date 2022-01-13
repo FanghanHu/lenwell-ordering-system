@@ -9,6 +9,13 @@ export default function DeviceSelector({setDevice}) {
     const [typeFilter, setTypeFilter] = useState("");
     const [model, setModel] = useState("");
     const [modelFilter, setModelFilter] = useState("");
+    const [color, setColor] = useState("");
+    const [colorFilter, setColorFilter] = useState("");
+
+    useEffect(() => {
+        setDevice({type, model, color});
+    }, [type, model, color])
+
 
     return (
         <div className="position-relative">
@@ -47,8 +54,30 @@ export default function DeviceSelector({setDevice}) {
             {
                 devices.models[type]?.filter(el => !modelFilter | el[0].toLowerCase().includes(modelFilter.toLowerCase()))?.map((el, index) => {
                     return (
-                        <Button className="m-1" variant="success" onClick={() => setModel(el[1])} key={`type-${index}`}>
+                        <Button className="m-1" variant="success" onClick={() => setModel(el[1])} key={`model-${index}`}>
                             {el[0]}
+                        </Button>
+                    )
+                })
+            }
+            <InputGroup className="my-1">
+                <InputGroup.Text>Color</InputGroup.Text>
+                <FormControl
+                    value={color}
+                    onChange={(e) => {
+                        setColor(e.target.value);
+                        setColorFilter(e.target.value);
+                    }}
+                />
+            </InputGroup>
+            {
+                devices.colors.filter(el => !colorFilter | el.toLowerCase().includes(colorFilter.toLowerCase())).map((el, index) => {
+                    return (
+                        <Button className="m-1" variant="success" key={`color-${index}`} onClick={ () => {
+                            setColor(el);
+                            setColorFilter("");
+                        }}>
+                            {el}
                         </Button>
                     )
                 })
