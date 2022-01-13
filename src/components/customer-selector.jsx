@@ -5,13 +5,12 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Collapse from 'react-bootstrap/Collapse'
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import repairshopr from "../utils/repairshopr";
 import ControlledTextInput from "./controlled-text-input";
 
 export default function CustomerSelector({ setCustomer }) {
     const [input, setInput] = useState("");
-    const [requestId, setRequestId] = useState(0);
     const [customers, setCustomers] = useState([]);
     
 
@@ -52,6 +51,8 @@ export default function CustomerSelector({ setCustomer }) {
         });
     }, [firstName, lastName, businessName, phone, mobile, email, address1, address2, city, state, zip])
 
+    const lastReq = useRef();
+
     return (
         <div className="position-relative">
             <InputGroup className="my-1">
@@ -60,13 +61,11 @@ export default function CustomerSelector({ setCustomer }) {
                     value={input}
                     onChange={(e) => {
                         setInput(e.target.value);
-                        //prevent request racing
-                        const id = requestId + 1;
-                        setRequestId(id);
-                        repairshopr.get("customers/autocomplete", { query: input }).then((res) => {
+                        const currentReq = repairshopr.get("customers/autocomplete", { query: input })
+                        lastReq.current = currentReq;
+                        currentReq.then((res) => {
                             //only update list if the request is the latest one
-                            if (requestId <= id) {
-                                //console.log(res);
+                            if(currentReq === lastReq.current) {
                                 setCustomers(res.data.customers);
                             }
                         });
