@@ -89,6 +89,7 @@ export default function CustomerSelector({ setCustomer }) {
                     }
                     setShowForm(true);
                     setInput("");
+                    setCustomers([]);
                 }}>
                     New
                 </Button>
