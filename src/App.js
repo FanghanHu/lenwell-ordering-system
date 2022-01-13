@@ -3,6 +3,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SetupButton from './components/setup-button';
 import CustomerSelector from './components/customer-selector';
+import DeviceSelector from './components/device-selector';
 
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
     <div className="App">
         <SetupButton/>
         <CustomerSelector setCustomer={(customer) => {console.log(customer)}}/>
-        some more text
+        <DeviceSelector setDevice={(device) => {console.log(device)}}/>
     </div>
   );
 }
