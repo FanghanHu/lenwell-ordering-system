@@ -10,6 +10,7 @@ function App() {
     <div className="App">
         <SetupButton/>
         <CustomerSelector setCustomer={(customer) => {console.log(customer)}}/>
+        some more text
     </div>
   );
 }
