@@ -1,13 +1,13 @@
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Form from "react-bootstrap/Form"
 import repairshopr from "../utils/repairshopr";
 
 export default function TaskSelector({ setTask, device }) {
 
-    const [tasks, setTasks] = useState([]);
+    const [input, setInput] = useState([]);
     const [products, setProducts] = useState([]);
     const lastReq = useRef();
 
@@ -23,17 +23,21 @@ export default function TaskSelector({ setTask, device }) {
                 }
             })
         }
-    }, [device])
+    }, [device]);
+
+    useEffect(() => {
+        setTask(input);
+    }, [input])
 
     const addTask = (task) => {
         //console.log(task);
-        const index = tasks.length;
-        setTasks([...tasks, task]);
+        const index = input.length;
+        setInput([...input, task]);
     }
 
     const removeTask = (task) => {
-        const newTasks = tasks.filter(el => el !== task);
-        setTasks(newTasks);
+        const newTasks = input.filter(el => el !== task);
+        setInput(newTasks);
     }
 
     //find related products
@@ -125,7 +129,7 @@ export default function TaskSelector({ setTask, device }) {
                 <InputGroup.Text>Tasks</InputGroup.Text>
                 <FormControl as="div" className="d-flex">
                     {
-                        tasks.map((task, index) => {
+                        input.map((task, index) => {
                             return (
                                 <InputGroup className="mx-1 d-inline-flex align-items-center w-auto" key={`task-${index}`}>
                                     <InputGroup.Text className="outline-secondary user-select-none">{`${task.name} ${task.color&&task.color!='default'?`(${task.color})`:""}`}</InputGroup.Text>
