@@ -89,17 +89,30 @@ export default function TaskSelector({ setTask, device }) {
         return options;
     }
 
-    const AddTaskButton = ({buttonName, taskName, children}) => {
-        const selectId = `${buttonName.replace(" ", "-")}-color`;
+    const AddColoredTaskButton = ({taskName, children}) => {
+        const selectId = `${taskName.replace(" ", "-")}-color`;
         return (
             <InputGroup className="m-1 d-inline-flex align-items-center w-auto">
-                <InputGroup.Text className="bg-primary text-white user-select-none">{buttonName}</InputGroup.Text>
+                <InputGroup.Text className="bg-primary text-white user-select-none">{taskName}</InputGroup.Text>
                 <Form.Select className="border-primary" id={selectId} defaultValue={device?.color?.toLowerCase()}>
                     {children}
                 </Form.Select>
                 <Button variant="outline-primary"
                     onClick={() => {
                         addTask({name: taskName, color: document.getElementById(selectId).value })
+                    }}
+                >+</Button>
+            </InputGroup>
+        );
+    }
+
+    const AddTaskButton = ({taskName}) => {
+        return (
+            <InputGroup className="m-1 d-inline-flex align-items-center w-auto">
+                <InputGroup.Text className="bg-primary text-white user-select-none">{taskName}</InputGroup.Text>
+                <Button variant="outline-primary"
+                    onClick={() => {
+                        addTask({name: taskName})
                     }}
                 >+</Button>
             </InputGroup>
@@ -127,10 +140,18 @@ export default function TaskSelector({ setTask, device }) {
                     }
                 </FormControl>
             </InputGroup>
-            <AddTaskButton buttonName={"Glass"} taskName={"Glass Repair"}><ColorOptions item={glass} prefix={"glass-repair"}/></AddTaskButton>
-            <AddTaskButton buttonName={"TP"} taskName={"TP Repair"}><ColorOptions item={tp} prefix={"tp-repair"}/></AddTaskButton>
-            <AddTaskButton buttonName={"Backdoor"} taskName={"Backdoor Repair"}><ColorOptions item={backdoor} prefix={"backdoor-repair"}/></AddTaskButton>
-            <AddTaskButton buttonName={"LCD"} taskName={"LCD Repair"}><ColorOptions item={lcd} prefix={"lcd-repair"}/></AddTaskButton>
+            <AddColoredTaskButton taskName={"Glass"}><ColorOptions item={glass} prefix={"glass-repair"}/></AddColoredTaskButton>
+            <AddColoredTaskButton taskName={"TP"}><ColorOptions item={tp} prefix={"tp-repair"}/></AddColoredTaskButton>
+            <AddColoredTaskButton taskName={"Backdoor"}><ColorOptions item={backdoor} prefix={"backdoor-repair"}/></AddColoredTaskButton>
+            <AddColoredTaskButton taskName={"LCD"}><ColorOptions item={lcd} prefix={"lcd-repair"}/></AddColoredTaskButton>
+            <AddTaskButton taskName={"Camera"}/>
+            <AddTaskButton taskName={"Camera Lens"}/>
+            <AddTaskButton taskName={"Charging Port"}/>
+            <AddTaskButton taskName={"Polish"}/>
+            <AddTaskButton taskName={"Home Button"}/>
+            <AddTaskButton taskName={"Speaker"}/>
+            <AddTaskButton taskName={"Frame"}/>
+            <AddTaskButton taskName={"Other"}/>
         </div>
     )
 }
