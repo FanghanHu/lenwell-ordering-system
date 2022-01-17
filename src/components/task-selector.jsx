@@ -106,17 +106,6 @@ export default function TaskSelector({ setTask, device }) {
         );
     }
 
-    const coloredTasks = useMemo(() => {
-        return(
-            <>
-                <AddTaskButton buttonName={"Glass"} taskName={"Glass Repair"}><ColorOptions item={glass} prefix={"glass-repair"}/></AddTaskButton>
-                <AddTaskButton buttonName={"TP"} taskName={"TP Repair"}><ColorOptions item={tp} prefix={"tp-repair"}/></AddTaskButton>
-                <AddTaskButton buttonName={"Backdoor"} taskName={"Backdoor Repair"}><ColorOptions item={backdoor} prefix={"backdoor-repair"}/></AddTaskButton>
-                <AddTaskButton buttonName={"LCD"} taskName={"LCD Repair"}><ColorOptions item={lcd} prefix={"lcd-repair"}/></AddTaskButton>
-            </>
-        )
-    }, [device, products])
-
     return (
         <div className="position-relative">
             <InputGroup className="my-1">
@@ -138,7 +127,10 @@ export default function TaskSelector({ setTask, device }) {
                     }
                 </FormControl>
             </InputGroup>
-            {coloredTasks}
+            <AddTaskButton buttonName={"Glass"} taskName={"Glass Repair"}><ColorOptions item={glass} prefix={"glass-repair"}/></AddTaskButton>
+            <AddTaskButton buttonName={"TP"} taskName={"TP Repair"}><ColorOptions item={tp} prefix={"tp-repair"}/></AddTaskButton>
+            <AddTaskButton buttonName={"Backdoor"} taskName={"Backdoor Repair"}><ColorOptions item={backdoor} prefix={"backdoor-repair"}/></AddTaskButton>
+            <AddTaskButton buttonName={"LCD"} taskName={"LCD Repair"}><ColorOptions item={lcd} prefix={"lcd-repair"}/></AddTaskButton>
         </div>
     )
 }
