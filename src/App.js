@@ -6,6 +6,7 @@ import CustomerSelector from './components/customer-selector';
 import DeviceSelector from './components/device-selector';
 import TaskSelector from './components/task-selector';
 import { useState } from 'react';
+import ProblemSelector from './components/problem-selector';
 
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
 
   return (
     <div className="App">
-        <SetupButton/>
+      <h1>New Ticket <SetupButton/> </h1>
         <CustomerSelector setCustomer={(customer) => {console.log(customer)}}/>
         <DeviceSelector setDevice={(device) => {
             setDevice(device)
@@ -21,6 +22,7 @@ function App() {
         }}/>
 
         <TaskSelector device={device} setTask={(task) => {console.log(task)}}/>
+        <ProblemSelector setProblems={(problems) => {console.log(problems)}}/>
     </div>
   );
 }
