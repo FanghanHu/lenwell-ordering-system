@@ -32,7 +32,7 @@ export default function DeviceSelector({setDevice}) {
             {
                 Object.keys(devices.models).filter(el => !typeFilter | el.toLowerCase().includes(typeFilter.toLowerCase())).map((el, index) => {
                     return (
-                        <Button className="m-1" variant="success" key={`type-${index}`} onClick={ () => {
+                        <Button className="m-1" variant={type?type===el?"success":"secondary":"secondary"} key={`type-${index}`} onClick={ () => {
                             setType(el);
                             setModelFilter("");
                         }}>
@@ -54,7 +54,7 @@ export default function DeviceSelector({setDevice}) {
             {
                 devices.models[type]?.filter(el => !modelFilter | el[0].toLowerCase().includes(modelFilter.toLowerCase()))?.map((el, index) => {
                     return (
-                        <Button className="m-1" variant="success" onClick={() => setModel(el[1])} key={`model-${index}`}>
+                        <Button className="m-1" variant={model?model===el[1]?"success":"secondary":"secondary"} onClick={() => setModel(el[1])} key={`model-${index}`}>
                             {el[0]}
                         </Button>
                     )
@@ -73,7 +73,7 @@ export default function DeviceSelector({setDevice}) {
             {
                 devices.colors.filter(el => !colorFilter | el.toLowerCase().includes(colorFilter.toLowerCase())).map((el, index) => {
                     return (
-                        <Button className="m-1" variant="success" key={`color-${index}`} onClick={ () => {
+                        <Button className="m-1" variant={color?color===el?"success":"secondary":"secondary"} key={`color-${index}`} onClick={ () => {
                             setColor(el);
                             setColorFilter("");
                         }}>
