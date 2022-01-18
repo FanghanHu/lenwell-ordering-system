@@ -11,6 +11,8 @@ function withApi(params) {
     };
 }
 
+
+
 const repairshopr = {
     get: (endpoint, params) => {
         return axios.get(getUrl(endpoint), {
@@ -28,6 +30,9 @@ const repairshopr = {
     post: (endpoint, params) => {
         return axios.post(getUrl(endpoint), withApi(params));
     },
+    openTicket: (ticketId) => {
+        window.location.href = `https://${process.env["REACT_APP_REPAIRSHOPR_DOMAIN"]}/tickets/${ticketId}`;
+    }
 };
 
 export default repairshopr;

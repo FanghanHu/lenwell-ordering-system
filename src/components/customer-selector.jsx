@@ -55,7 +55,7 @@ export default function CustomerSelector({ setCustomer }) {
 
     return (
         <div className="position-relative">
-            <InputGroup className="my-1">
+            <InputGroup className="mt-5 mb-1">
                 <InputGroup.Text>Customer</InputGroup.Text>
                 <FormControl
                     value={input}

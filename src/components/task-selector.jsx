@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import Form from "react-bootstrap/Form"
 import repairshopr from "../utils/repairshopr";
 
-export default function TaskSelector({ setTask, device }) {
+export default function TaskSelector({ setTasks, device }) {
 
     const [input, setInput] = useState([]);
     const [products, setProducts] = useState([]);
@@ -26,11 +26,11 @@ export default function TaskSelector({ setTask, device }) {
     }, [device]);
 
     useEffect(() => {
-        setTask(input);
+        setTasks(input);
     }, [input])
 
     const addTask = (task) => {
-        //console.log(task);
+        console.log(task);
         const index = input.length;
         setInput([...input, task]);
     }
@@ -79,13 +79,18 @@ export default function TaskSelector({ setTask, device }) {
         if(findProduct(product, lcd, "LCD")) continue;
     }
 
-    const ColorOptions = ({item, prefix}) => {
+    const ColorOptions = ({item, service, prefix}) => {
         const options = [];
         const colors = Object.keys(item);
         for(let i=0; i<colors.length; i++) {
             const color = colors[i];
             options.push(
-                <option value={color} key={`${prefix}-${i}`}>
+                <option 
+                    value={color} 
+                    data-product-id={item[color].id} 
+                    data-service-id={service.default.id} 
+                    key={`${prefix}-${i}`}
+                >
                     {color}
                 </option>
             )
@@ -103,7 +108,15 @@ export default function TaskSelector({ setTask, device }) {
                 </Form.Select>
                 <Button variant="outline-primary"
                     onClick={() => {
-                        addTask({name: taskName, color: document.getElementById(selectId).value })
+                        const select = document.getElementById(selectId);
+                        const option = select.querySelector(`option[value=${select.value}]`);
+                        addTask(
+                            {
+                                name: taskName, 
+                                color: select.value, 
+                                productId: option.getAttribute("data-product-id"),
+                                serviceId: option.getAttribute("data-service-id")
+                            })
                     }}
                 >+</Button>
             </InputGroup>
@@ -125,7 +138,7 @@ export default function TaskSelector({ setTask, device }) {
 
     return (
         <div className="position-relative">
-            <InputGroup className="my-1">
+            <InputGroup className="mt-5 mb-1">
                 <InputGroup.Text>Tasks</InputGroup.Text>
                 <FormControl as="div" className="d-flex">
                     {
@@ -144,10 +157,10 @@ export default function TaskSelector({ setTask, device }) {
                     }
                 </FormControl>
             </InputGroup>
-            <AddColoredTaskButton taskName={"Glass"}><ColorOptions item={glass} prefix={"glass-repair"}/></AddColoredTaskButton>
-            <AddColoredTaskButton taskName={"TP"}><ColorOptions item={tp} prefix={"tp-repair"}/></AddColoredTaskButton>
-            <AddColoredTaskButton taskName={"Backdoor"}><ColorOptions item={backdoor} prefix={"backdoor-repair"}/></AddColoredTaskButton>
-            <AddColoredTaskButton taskName={"LCD"}><ColorOptions item={lcd} prefix={"lcd-repair"}/></AddColoredTaskButton>
+            <AddColoredTaskButton taskName={"Glass"}><ColorOptions item={glass} service={glassRepair} prefix={"glass-repair"}/></AddColoredTaskButton>
+            <AddColoredTaskButton taskName={"TP"}><ColorOptions item={tp} service={tpRepair} prefix={"tp-repair"}/></AddColoredTaskButton>
+            <AddColoredTaskButton taskName={"Backdoor"}><ColorOptions item={backdoor} service={backdoorRepair} prefix={"backdoor-repair"}/></AddColoredTaskButton>
+            <AddColoredTaskButton taskName={"LCD"}><ColorOptions item={lcd} service={lcdRepair} prefix={"lcd-repair"}/></AddColoredTaskButton>
             <AddTaskButton taskName={"Camera"}/>
             <AddTaskButton taskName={"Camera Lens"}/>
             <AddTaskButton taskName={"Charging Port"}/>

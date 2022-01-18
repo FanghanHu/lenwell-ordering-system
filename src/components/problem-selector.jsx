@@ -12,7 +12,6 @@ export default function ProblemSelector({ setProblems }) {
 
     const addProblem = (task) => {
         //console.log(task);
-        const index = input.length;
         setInput([...input, task]);
     }
 
@@ -27,7 +26,7 @@ export default function ProblemSelector({ setProblems }) {
                 <InputGroup.Text className="bg-dark text-white user-select-none">{problemName}</InputGroup.Text>
                 <Button variant="outline-dark"
                     onClick={() => {
-                        addProblem({ name: problemName })
+                        addProblem(problemName)
                     }}
                 >+</Button>
             </InputGroup>
@@ -36,17 +35,17 @@ export default function ProblemSelector({ setProblems }) {
 
     return (
         <div className="position-relative">
-            <InputGroup className="my-1">
+            <InputGroup className="mt-5 mb-1">
                 <InputGroup.Text>Problems</InputGroup.Text>
                 <FormControl as="div" className="d-flex">
                     {
-                        input.map((task, index) => {
+                        input.map((problem, index) => {
                             return (
-                                <InputGroup className="mx-1 d-inline-flex align-items-center w-auto" key={`task-${index}`}>
-                                    <InputGroup.Text className="outline-secondary user-select-none">{`${task.name} ${task.color && task.color != 'default' ? `(${task.color})` : ""}`}</InputGroup.Text>
+                                <InputGroup className="mx-1 d-inline-flex align-items-center w-auto" key={`problem-${index}`}>
+                                    <InputGroup.Text className="outline-secondary user-select-none">{problem}</InputGroup.Text>
                                     <Button variant="outline-danger"
                                         onClick={() => {
-                                            removeProblem(task);
+                                            removeProblem(problem);
                                         }}
                                     >-</Button>
                                 </InputGroup>

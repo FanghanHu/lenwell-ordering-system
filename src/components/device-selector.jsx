@@ -19,7 +19,7 @@ export default function DeviceSelector({setDevice}) {
 
     return (
         <div className="position-relative">
-            <InputGroup className="my-1">
+            <InputGroup className="mt-5 mb-1">
                 <InputGroup.Text>Type</InputGroup.Text>
                 <FormControl
                     value={type}
