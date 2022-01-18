@@ -4,7 +4,7 @@ import SetupButton from './components/setup-button';
 import CustomerSelector from './components/customer-selector';
 import DeviceSelector from './components/device-selector';
 import TaskSelector from './components/task-selector';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import ProblemSelector from './components/problem-selector';
 import Button from "react-bootstrap/Button";
 import repairshopr from './utils/repairshopr';
@@ -36,7 +36,7 @@ function App() {
     const ticket = {
       "subject": `${device.model}${device.color?" - ":""}${device.color}${problems.length?" - ":""}${problems.join(" - ")}`,
       "customer_id": customerId,
-      "problem_type": `${tasks.map(task => task.color&&task.color!="default"?`${task.name}(${task.color})`:task.name).join(", ")}`
+      "problem_type": `${tasks.map(task => task.color&&task.color!=="default"?`${task.name}(${task.color})`:task.name).join(", ")}`
     }
 
     const res2 = await repairshopr.post("tickets", ticket);
@@ -72,22 +72,22 @@ function App() {
   return (
     <div className="App">
       <h1>New Ticket <SetupButton /> </h1>
-      <CustomerSelector setCustomer={(customer) => {
+      <CustomerSelector setCustomer={useCallback((customer) => {
         console.log(customer)
         setCustomer(customer);
-      }} />
-      <DeviceSelector setDevice={(device) => {
+      }, [])} />
+      <DeviceSelector setDevice={useCallback((device) => {
         setDevice(device)
         console.log(device);
-      }} />
-      <TaskSelector device={device} setTasks={(tasks) => {
+      }, [])} />
+      <TaskSelector device={device} setTasks={useCallback((tasks) => {
         setTasks(tasks);
         console.log(tasks)
-      }} />
-      <ProblemSelector setProblems={(problems) => {
+      }, [])} />
+      <ProblemSelector setProblems={useCallback((problems) => {
         setProblems(problems);
         console.log(problems)
-      }} />
+      }, [])} />
       <div className='float-end mt-5'>
         <Button variant='info' size='lg' className='m-1' disabled={sendingOrder} onClick={async () => {
           await sendOrder();

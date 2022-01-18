@@ -27,11 +27,10 @@ export default function TaskSelector({ setTasks, device }) {
 
     useEffect(() => {
         setTasks(input);
-    }, [input])
+    }, [input, setTasks])
 
     const addTask = (task) => {
         console.log(task);
-        const index = input.length;
         setInput([...input, task]);
     }
 
@@ -138,14 +137,14 @@ export default function TaskSelector({ setTasks, device }) {
 
     return (
         <div className="position-relative">
-            <InputGroup className="mt-5 mb-1">
+            <InputGroup className="mt-3 mb-1">
                 <InputGroup.Text>Tasks</InputGroup.Text>
                 <FormControl as="div" className="d-flex">
                     {
                         input.map((task, index) => {
                             return (
                                 <InputGroup className="mx-1 d-inline-flex align-items-center w-auto" key={`task-${index}`}>
-                                    <InputGroup.Text className="outline-secondary user-select-none">{`${task.name} ${task.color&&task.color!='default'?`(${task.color})`:""}`}</InputGroup.Text>
+                                    <InputGroup.Text className="outline-secondary user-select-none">{`${task.name} ${task.color&&task.color!=='default'?`(${task.color})`:""}`}</InputGroup.Text>
                                     <Button variant="outline-danger"
                                         onClick={() => {
                                             removeTask(task);

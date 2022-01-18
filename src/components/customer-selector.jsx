@@ -49,13 +49,13 @@ export default function CustomerSelector({ setCustomer }) {
             "state": state,
             "zip": zip
         });
-    }, [firstName, lastName, businessName, phone, mobile, email, address1, address2, city, state, zip])
+    }, [firstName, lastName, businessName, phone, mobile, email, address1, address2, city, state, zip, setCustomer])
 
     const lastReq = useRef();
 
     return (
         <div className="position-relative">
-            <InputGroup className="mt-5 mb-1">
+            <InputGroup className="mt-3 mb-1">
                 <InputGroup.Text>Customer</InputGroup.Text>
                 <FormControl
                     value={input}

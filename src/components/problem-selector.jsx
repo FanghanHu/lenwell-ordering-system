@@ -8,7 +8,7 @@ export default function ProblemSelector({ setProblems }) {
 
     useEffect(() => {
         setProblems(input);
-    }, [input])
+    }, [input, setProblems])
 
     const addProblem = (task) => {
         //console.log(task);
@@ -35,7 +35,7 @@ export default function ProblemSelector({ setProblems }) {
 
     return (
         <div className="position-relative">
-            <InputGroup className="mt-5 mb-1">
+            <InputGroup className="mt-3 mb-1">
                 <InputGroup.Text>Problems</InputGroup.Text>
                 <FormControl as="div" className="d-flex">
                     {

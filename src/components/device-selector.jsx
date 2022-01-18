@@ -14,12 +14,12 @@ export default function DeviceSelector({setDevice}) {
 
     useEffect(() => {
         setDevice({type, model, color});
-    }, [type, model, color])
+    }, [type, model, color, setDevice])
 
 
     return (
         <div className="position-relative">
-            <InputGroup className="mt-5 mb-1">
+            <InputGroup className="mt-3 mb-1">
                 <InputGroup.Text>Type</InputGroup.Text>
                 <FormControl
                     value={type}
