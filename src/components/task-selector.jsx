@@ -51,14 +51,14 @@ export default function TaskSelector({ setTasks, device }) {
 
     const findProduct = (product, item, itemName) => {
         //find colored variants
-        const match = product.name.match(`^${device.model} ${itemName} \\((.+)\\)$`);
+        const match = product.description.match(`^${device.model} ${itemName} \\((.+)\\)$`);
         if(match && match.length === 2) {
             item[match[1].toLowerCase()] = product;
             return true;
         }
 
         //find default item
-        if(product.name.match(`^${device.model} ${itemName}$`)) {
+        if(product.description.match(`^${device.model} ${itemName}$`)) {
             item.default = product;
             return true;
         }
