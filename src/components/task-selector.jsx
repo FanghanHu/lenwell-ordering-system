@@ -163,6 +163,7 @@ export default function TaskSelector({ setTasks, device }) {
             <AddTaskButton taskName={"Camera"}/>
             <AddTaskButton taskName={"Camera Lens"}/>
             <AddTaskButton taskName={"Charging Port"}/>
+            <AddTaskButton taskName={"Battery"}/>
             <AddTaskButton taskName={"Polish"}/>
             <AddTaskButton taskName={"Home Button"}/>
             <AddTaskButton taskName={"Speaker"}/>
