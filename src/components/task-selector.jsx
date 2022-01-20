@@ -5,6 +5,19 @@ import { useEffect, useRef, useState } from "react";
 import Form from "react-bootstrap/Form"
 import repairshopr from "../utils/repairshopr";
 
+
+
+const CUSTOM_TASKS = [
+    "Camera",
+    "Camera Lens",
+    "Charging Port",
+    "Battery",
+    "Polish",
+    "Home Button",
+    "Speaker",
+    "Frame",
+];
+
 export default function TaskSelector({ setTasks, device }) {
 
     const [input, setInput] = useState([]);
@@ -138,12 +151,21 @@ export default function TaskSelector({ setTasks, device }) {
     }
 
     const AddTaskButton = ({taskName}) => {
+        const service = products.find(product => product.description.match(`^${device.model} ${taskName} Repair$`));
+        const product = products.find(product => product.description.match(`^${device.model} ${taskName}$`));
+
         return (
             <InputGroup className="m-1 d-inline-flex align-items-center w-auto">
                 <InputGroup.Text className="bg-primary text-white user-select-none">{taskName}</InputGroup.Text>
                 <Button variant="outline-primary"
                     onClick={() => {
-                        addTask({name: taskName})
+                        addTask(
+                            {
+                                name: taskName, 
+                                productId: product?.id, 
+                                serviceId: service?.id, 
+                                additionalItems: device.options?.[taskName]
+                            });
                     }}
                 >+</Button>
             </InputGroup>
@@ -175,15 +197,26 @@ export default function TaskSelector({ setTasks, device }) {
             <AddColoredTaskButton taskName={"TP"}><ColorOptions item={tp} service={tpRepair} prefix={"tp-repair"}/></AddColoredTaskButton>
             <AddColoredTaskButton taskName={"Backdoor"}><ColorOptions item={backdoor} service={backdoorRepair} prefix={"backdoor-repair"}/></AddColoredTaskButton>
             <AddColoredTaskButton taskName={"LCD"}><ColorOptions item={lcd} service={lcdRepair} prefix={"lcd-repair"}/></AddColoredTaskButton>
-            <AddTaskButton taskName={"Camera"}/>
-            <AddTaskButton taskName={"Camera Lens"}/>
-            <AddTaskButton taskName={"Charging Port"}/>
-            <AddTaskButton taskName={"Battery"}/>
-            <AddTaskButton taskName={"Polish"}/>
-            <AddTaskButton taskName={"Home Button"}/>
-            <AddTaskButton taskName={"Speaker"}/>
-            <AddTaskButton taskName={"Frame"}/>
-            <AddTaskButton taskName={"Other"}/>
+            {CUSTOM_TASKS.map(taskName => <AddTaskButton taskName={taskName} key={`task-${taskName}`}/>)}
+            <InputGroup className="m-1 d-inline-flex align-items-center w-auto">
+                <InputGroup.Text className="bg-primary text-white user-select-none">Other</InputGroup.Text>
+                <FormControl id="other-task"/>
+                <Button variant="outline-primary"
+                    onClick={() => {
+                        const input = document.getElementById("other-task")
+                        const taskName = input.value;
+                        input.value = "";
+                        const service = products.find(product => product.description.match(`^${device.model} ${taskName} Repair$`));
+                        const product = products.find(product => product.description.match(`^${device.model} ${taskName}$`));
+                        addTask({
+                            name: taskName,
+                            productId: product?.id, 
+                            serviceId: service?.id, 
+                            additionalItems: device.options?.[taskName]
+                        })
+                    }}
+                >+</Button>
+            </InputGroup>
         </div>
     )
 }
