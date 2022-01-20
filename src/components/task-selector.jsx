@@ -16,10 +16,23 @@ export default function TaskSelector({ setTasks, device }) {
         if(device.model) {
             const req = repairshopr.get("products", {query: repairshopr.senitize(device.model)});
             lastReq.current = req;
-            req.then((res) => {
+            req.then(async (res) => {
+                const allProducts = [];
+                allProducts.push(...(res.data.products));
+
+                //send more requests if there are more to read.
+                let totalPage = res.data.meta.total_pages;
+                let page = res.data.meta.page;
+                while(page < totalPage) {
+                    page++;
+                    const res2 = await repairshopr.get("products", {query: repairshopr.senitize(device.model), page});
+                    allProducts.push(...(res2.data.products));
+                }
+
                 //prevent request racing
                 if(lastReq.current === req) {
-                    setProducts(res.data.products);
+                    setProducts(allProducts);
+                    console.log("products", allProducts);
                 }
             })
         }
