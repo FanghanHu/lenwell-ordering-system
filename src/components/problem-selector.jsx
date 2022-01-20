@@ -10,13 +10,13 @@ export default function ProblemSelector({ setProblems }) {
         setProblems(input);
     }, [input, setProblems])
 
-    const addProblem = (task) => {
+    const addProblem = (problem) => {
         //console.log(task);
-        setInput([...input, task]);
+        setInput([...input, problem]);
     }
 
-    const removeProblem = (task) => {
-        const newTasks = input.filter(el => el !== task);
+    const removeProblem = (problem) => {
+        const newTasks = input.filter(el => el !== problem);
         setInput(newTasks);
     }
 
@@ -31,6 +31,13 @@ export default function ProblemSelector({ setProblems }) {
                 >+</Button>
             </InputGroup>
         );
+    }
+
+    const handleOtherProblem = () => {
+        const input = document.getElementById("other-problem")
+        const problem = input.value;
+        input.value = "";
+        addProblem(problem)
     }
 
     return (
@@ -66,6 +73,18 @@ export default function ProblemSelector({ setProblems }) {
             <AddProblemButton problemName="Broken Camera Lens"/>
             <AddProblemButton problemName="Broken Camera"/>
             <AddProblemButton problemName="Broken Home Button"/>
+            <AddProblemButton problemName="LCD Only"/>
+            <InputGroup className="m-1 d-inline-flex align-items-center w-auto">
+                <InputGroup.Text className="bg-dark text-white user-select-none">Other</InputGroup.Text>
+                <FormControl id="other-problem" onKeyUp={(e) => {
+                    if (e.key === 'Enter' || e.keyCode === 13) {
+                        handleOtherProblem();
+                    }
+                }}/>
+                <Button variant="outline-dark"
+                    onClick={handleOtherProblem}
+                >+</Button>
+            </InputGroup>
         </div>
     );
 }

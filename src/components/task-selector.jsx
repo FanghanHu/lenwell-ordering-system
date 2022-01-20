@@ -24,30 +24,15 @@ export default function TaskSelector({ setTasks, device }) {
     const [products, setProducts] = useState([]);
     const lastReq = useRef();
 
-    useEffect(() => {
+    useEffect(async () => {
         //query for products that's related to this model
         if(device.model) {
-            const req = repairshopr.get("products", {query: repairshopr.senitize(device.model)});
-            lastReq.current = req;
-            req.then(async (res) => {
-                const allProducts = [];
-                allProducts.push(...(res.data.products));
-
-                //send more requests if there are more to read.
-                let totalPage = res.data.meta.total_pages;
-                let page = res.data.meta.page;
-                while(page < totalPage) {
-                    page++;
-                    const res2 = await repairshopr.get("products", {query: repairshopr.senitize(device.model), page});
-                    allProducts.push(...(res2.data.products));
-                }
-
-                //prevent request racing
-                if(lastReq.current === req) {
-                    setProducts(allProducts);
-                    console.log("products", allProducts);
-                }
-            })
+            const requestTime = Date.now();
+            lastReq.current = requestTime;
+            const results = await repairshopr.queryProducts(device.model);
+            if(lastReq.current === requestTime) {
+                setProducts(results);
+            }
         }
     }, [device]);
 
@@ -135,7 +120,10 @@ export default function TaskSelector({ setTasks, device }) {
                     onClick={() => {
                         const select = document.getElementById(selectId);
                         const option = select.querySelector(`option[value=${select.value}]`);
-
+                        //color is used when adding additionalItem with color to line items when sending the ticket
+                        //productId and serviceId are ids of prodcuts to be added as a line item when sending the ticket
+                        //additionalItems is an array of string, which will hint the system to look for additional
+                        //products to add as line items when sending the ticket
                         addTask(
                             {
                                 name: taskName, 
@@ -172,6 +160,20 @@ export default function TaskSelector({ setTasks, device }) {
         );
     }
 
+    const handleOtherTask = () => {
+        const input = document.getElementById("other-task")
+        const taskName = input.value;
+        input.value = "";
+        const service = products.find(product => product.description.match(`^${device.model} ${taskName} Repair$`));
+        const product = products.find(product => product.description.match(`^${device.model} ${taskName}$`));
+        addTask({
+            name: taskName,
+            productId: product?.id, 
+            serviceId: service?.id, 
+            additionalItems: device.options?.[taskName]
+        })
+    }
+
     return (
         <div className="position-relative">
             <InputGroup className="mt-3 mb-1">
@@ -200,21 +202,13 @@ export default function TaskSelector({ setTasks, device }) {
             {CUSTOM_TASKS.map(taskName => <AddTaskButton taskName={taskName} key={`task-${taskName}`}/>)}
             <InputGroup className="m-1 d-inline-flex align-items-center w-auto">
                 <InputGroup.Text className="bg-primary text-white user-select-none">Other</InputGroup.Text>
-                <FormControl id="other-task"/>
+                <FormControl id="other-task" onKeyUp={(e) => {
+                    if (e.key === 'Enter' || e.keyCode === 13) {
+                        handleOtherTask();
+                    }
+                }}/>
                 <Button variant="outline-primary"
-                    onClick={() => {
-                        const input = document.getElementById("other-task")
-                        const taskName = input.value;
-                        input.value = "";
-                        const service = products.find(product => product.description.match(`^${device.model} ${taskName} Repair$`));
-                        const product = products.find(product => product.description.match(`^${device.model} ${taskName}$`));
-                        addTask({
-                            name: taskName,
-                            productId: product?.id, 
-                            serviceId: service?.id, 
-                            additionalItems: device.options?.[taskName]
-                        })
-                    }}
+                    onClick={handleOtherTask}
                 >+</Button>
             </InputGroup>
         </div>

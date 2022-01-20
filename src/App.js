@@ -69,11 +69,9 @@ function App() {
 
       //add additional item in the task
       for(const item of task.additionalItems) {
-        let res = await repairshopr.get("products", {
-          query: repairshopr.senitize(item.replace("%color%", device.color??""))
-        });
-        for(const product of res.data.products) {
-          if(product.description.toLowerCase() === item.replace("%color%", device.color??"").toLowerCase()) {
+        let products = await repairshopr.queryProducts(item.replace("%color%", task.color?`(${task.color})`:""));
+        for(const product of products) {
+          if(product.description.toLowerCase() === item.replace("%color%", task.color?`(${task.color})`:"").toLowerCase()) {
             await addLineItem(product);
             break;
           }
