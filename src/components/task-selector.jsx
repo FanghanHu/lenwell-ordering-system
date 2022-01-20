@@ -5,8 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import Form from "react-bootstrap/Form"
 import repairshopr from "../utils/repairshopr";
 
-
-
 const CUSTOM_TASKS = [
     "Camera",
     "Camera Lens",
@@ -19,7 +17,7 @@ const CUSTOM_TASKS = [
 ];
 
 export default function TaskSelector({ setTasks, device }) {
-
+    //input is the list of tasks currently selected
     const [input, setInput] = useState([]);
     const [products, setProducts] = useState([]);
     const lastReq = useRef();

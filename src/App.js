@@ -21,6 +21,7 @@ function App() {
   const [showModal, setShowModal] = useState(false);
 
   const sendOrder = async () => {
+    //disable the send button to prevent duplicate orders
     setSendingOrder(true);
 
     let customerId = customer.id;
@@ -39,9 +40,11 @@ function App() {
       "problem_type": `${tasks.map(task => task.color&&task.color!=="default"?`${task.name}(${task.color})`:task.name).join(", ")}`
     }
 
+    //create the ticket in repairshopr
     const res2 = await repairshopr.post("tickets", ticket);
     const ticketId = res2.data.ticket.id;
 
+    //add line items to the ticket
     const addLineItem = (product) => {
       return repairshopr.post(`tickets/${ticketId}/add_line_item`, {
         "name": product.name,
@@ -79,6 +82,7 @@ function App() {
       }
     }
 
+    //release the buttons after the ticket is created
     setSendingOrder(false);
 
     return res2.data.ticket;
@@ -105,13 +109,17 @@ function App() {
       }, [])} />
       <div className='float-end mt-5'>
         <Button variant='info' size='lg' className='m-1' disabled={sendingOrder} onClick={async () => {
+          //create the ticket
           await sendOrder();
+          //display a modal to inform user the ticket is created
           setShowModal(true);
         }}>
           Chain Ticket
         </Button>
         <Button variant='primary' size='lg' className='m-1' disabled={sendingOrder} onClick={async () => {
+            //send the ticket to repairshopr
             let ticket = await sendOrder();
+            //open the  ticket in repairshopr
             repairshopr.openTicket(ticket.id);
         }}>
           Create Ticket
