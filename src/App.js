@@ -71,12 +71,14 @@ function App() {
       await addLineItemWithId(task.serviceId);
 
       //add additional item in the task
-      for(const item of task.additionalItems) {
-        let products = await repairshopr.queryProducts(item.replace("%color%", task.color?`(${task.color})`:""));
-        for(const product of products) {
-          if(product.description.toLowerCase() === item.replace("%color%", task.color?`(${task.color})`:"").toLowerCase()) {
-            await addLineItem(product);
-            break;
+      if(task.additionalItems?.length) {
+        for(const item of task.additionalItems) {
+          let products = await repairshopr.queryProducts(item.replace("%color%", task.color?`(${task.color})`:""));
+          for(const product of products) {
+            if(product.description.toLowerCase() === item.replace("%color%", task.color?`(${task.color})`:"").toLowerCase()) {
+              await addLineItem(product);
+              break;
+            }
           }
         }
       }

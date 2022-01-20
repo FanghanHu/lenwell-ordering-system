@@ -22,15 +22,16 @@ export default function TaskSelector({ setTasks, device }) {
     const [products, setProducts] = useState([]);
     const lastReq = useRef();
 
-    useEffect(async () => {
+    useEffect(() => {
         //query for products that's related to this model
         if(device.model) {
             const requestTime = Date.now();
             lastReq.current = requestTime;
-            const results = await repairshopr.queryProducts(device.model);
-            if(lastReq.current === requestTime) {
-                setProducts(results);
-            }
+            repairshopr.queryProducts(device.model).then((results => {
+                if(lastReq.current === requestTime) {
+                    setProducts(results);
+                }
+            }))
         }
     }, [device]);
 
