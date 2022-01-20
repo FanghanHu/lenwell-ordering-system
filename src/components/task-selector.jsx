@@ -14,7 +14,7 @@ export default function TaskSelector({ setTasks, device }) {
     useEffect(() => {
         //query for products that's related to this model
         if(device.model) {
-            const req = repairshopr.get("products", {query: device.model});
+            const req = repairshopr.get("products", {query: repairshopr.senitize(device.model)});
             lastReq.current = req;
             req.then((res) => {
                 //prevent request racing
@@ -109,12 +109,14 @@ export default function TaskSelector({ setTasks, device }) {
                     onClick={() => {
                         const select = document.getElementById(selectId);
                         const option = select.querySelector(`option[value=${select.value}]`);
+
                         addTask(
                             {
                                 name: taskName, 
                                 color: select.value, 
                                 productId: option.getAttribute("data-product-id"),
-                                serviceId: option.getAttribute("data-service-id")
+                                serviceId: option.getAttribute("data-service-id"),
+                                additionalItems: device.options?.[taskName]
                             })
                     }}
                 >+</Button>

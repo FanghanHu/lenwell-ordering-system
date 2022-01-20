@@ -42,26 +42,43 @@ function App() {
     const res2 = await repairshopr.post("tickets", ticket);
     const ticketId = res2.data.ticket.id;
 
-    const addLineItem = async (itemId) => {
+    const addLineItem = (product) => {
+      return repairshopr.post(`tickets/${ticketId}/add_line_item`, {
+        "name": product.name,
+        "description": product.description,
+        "product_id": product.id,
+        "quantity": 1,
+        "price_cost": product.price_cost,
+        "price_retail": product.price_retail,
+        "taxable": false
+      });
+    }
+
+    const addLineItemWithId = async (itemId) => {
       if(itemId) {
         const productRes = await repairshopr.get("products/" + itemId);
         const product = productRes.data.product;
-        await repairshopr.post(`tickets/${ticketId}/add_line_item`, {
-          "name": product.name,
-          "description": product.description,
-          "product_id": product.id,
-          "quantity": 1,
-          "price_cost": product.price_cost,
-          "price_retail": product.price_retail,
-          "taxable": false
-        });
+        await addLineItem(product);
       }
     }
 
     for(const task of tasks) {
       //add auto pricing and inventory line item to ticket
-      await addLineItem(task.productId);
-      await addLineItem(task.serviceId);
+      await addLineItemWithId(task.productId);
+      await addLineItemWithId(task.serviceId);
+
+      //add additional item in the task
+      for(const item of task.additionalItems) {
+        let res = await repairshopr.get("products", {
+          query: repairshopr.senitize(item.replace("%color%", device.color??""))
+        });
+        for(const product of res.data.products) {
+          if(product.description.toLowerCase() === item.replace("%color%", device.color??"").toLowerCase()) {
+            await addLineItem(product);
+            break;
+          }
+        }
+      }
     }
 
     setSendingOrder(false);

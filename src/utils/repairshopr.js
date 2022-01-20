@@ -32,6 +32,12 @@ const repairshopr = {
     },
     openTicket: (ticketId) => {
         window.location.href = `https://${process.env["REACT_APP_REPAIRSHOPR_DOMAIN"]}/tickets/${ticketId}`;
+    },
+    senitize: (query) => {
+        return query
+            .replace(".", " ")
+            .replace('"', " ")
+            .replace("/", " ");
     }
 };
 

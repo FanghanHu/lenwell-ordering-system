@@ -11,10 +11,11 @@ export default function DeviceSelector({setDevice}) {
     const [modelFilter, setModelFilter] = useState("");
     const [color, setColor] = useState("");
     const [colorFilter, setColorFilter] = useState("");
+    const [options, setOptions] = useState({});
 
     useEffect(() => {
-        setDevice({type, model, color});
-    }, [type, model, color, setDevice])
+        setDevice({type, model, color, options});
+    }, [type, model, color, options, setDevice])
 
 
     return (
@@ -54,7 +55,10 @@ export default function DeviceSelector({setDevice}) {
             {
                 devices.models[type]?.filter(el => !modelFilter | el[0].toLowerCase().includes(modelFilter.toLowerCase()))?.map((el, index) => {
                     return (
-                        <Button className="m-1" variant={model?model===el[1]?"success":"secondary":"success"} onClick={() => setModel(el[1])} key={`model-${index}`}>
+                        <Button className="m-1" variant={model?model===el[1]?"success":"secondary":"success"} key={`model-${index}`} onClick={() => {
+                            setModel(el[1]);
+                            setOptions(el[2]);
+                        }}>
                             {el[0]}
                         </Button>
                     )
