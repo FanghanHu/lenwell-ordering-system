@@ -14,6 +14,7 @@ const CUSTOM_TASKS = [
     "Home Button",
     "Speaker",
     "Frame",
+    "Backlight",
 ];
 
 export default function TaskSelector({ setTasks, device }) {
