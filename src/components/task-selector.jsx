@@ -79,6 +79,8 @@ export default function TaskSelector({ setTasks, device }) {
     let backdoor = {default: {}};
     let lcdRepair = {default: {}};
     let lcd = {default: {}};
+    let lcdARepair = {default: {}};
+    let lcdA = {default: {}};
 
     const findProduct = (product, item, itemName) => {
         //find colored variants
@@ -106,7 +108,9 @@ export default function TaskSelector({ setTasks, device }) {
         if(findProduct(product, backdoorRepair, "Backdoor Repair")) continue;
         if(findProduct(product, backdoor, "Backdoor")) continue;
         if(findProduct(product, lcdRepair, "LCD Repair")) continue;
+        if(findProduct(product, lcdARepair, "LCD-AM Repair")) continue;
         if(findProduct(product, lcd, "LCD")) continue;
+        if(findProduct(product, lcdA, "LCD-AM")) continue;
     }
 
     const ColorOptions = ({item, service, prefix}) => {
@@ -202,6 +206,7 @@ export default function TaskSelector({ setTasks, device }) {
             <AddColoredTaskButton taskName={"TP"}><ColorOptions item={tp} service={tpRepair} prefix={"tp-repair"}/></AddColoredTaskButton>
             <AddColoredTaskButton taskName={"Backdoor"}><ColorOptions item={backdoor} service={backdoorRepair} prefix={"backdoor-repair"}/></AddColoredTaskButton>
             <AddColoredTaskButton taskName={"LCD"}><ColorOptions item={lcd} service={lcdRepair} prefix={"lcd-repair"}/></AddColoredTaskButton>
+            <AddColoredTaskButton taskName={"LCD-AM"}><ColorOptions item={lcdA} service={lcdARepair} prefix={"lcd-am-repair"}/></AddColoredTaskButton>
             {CUSTOM_TASKS.map(taskName => <AddTaskButton taskName={taskName} key={`task-${taskName}`}/>)}
             <InputGroup className="m-1 d-inline-flex align-items-center w-auto">
                 <InputGroup.Text className="bg-primary text-white user-select-none">Other</InputGroup.Text>
