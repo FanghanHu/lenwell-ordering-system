@@ -133,21 +133,21 @@ const devices = {
         ]
     },
     colors: [
-        "white",
-        "silver",
-        "gray",
-        "black",
-        "red",
-        "green",
-        "blue",
-        "rose gold",
-        "pink",
-        "purple",
-        "gold",
-        "yellow",
-        "orange",
-        "bronze",
-        "other"
+        "White",
+        "Black",
+        "Silver",
+        "Gray",
+        "Red",
+        "Green",
+        "Blue",
+        "Rose Gold",
+        "Pink",
+        "Purple",
+        "Gold",
+        "Yellow",
+        "Orange",
+        "Bronze",
+        "Other"
     ]
 };
 

@@ -30,16 +30,36 @@ export default function TaskSelector({ setTasks, device }) {
             repairshopr.queryProducts(device.model).then((results => {
                 if(lastReq.current === requestTime) {
                     setProducts(results);
+                    //update all lineitems to new product ids
+                    setInput(input.map(task => updateLineItems(task, results)));
                 }
             }))
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [device]);
 
     useEffect(() => {
         setTasks(input);
     }, [input, setTasks])
 
+    // update product line item information based on currently selected device
+    const updateLineItems = (task, productsInput) => {
+        if(!productsInput) productsInput = products;
+        if(task.color) {
+            task.productId = productsInput.find(product => product.description === `${device.model} ${task.name} (${task.color})`)?.id;
+        } else {
+            task.productId = productsInput.find(product => product.description === `${device.model} ${task.name}`)?.id;
+        }
+
+        task.serviceId = productsInput.find(product => product.description === `${device.model} ${task.name} Repair`)?.id;;
+
+        task.additionalItems = device.options?.[task.name];
+
+        return task;
+    }
+
     const addTask = (task) => {
+        updateLineItems(task);
         console.log(task);
         setInput([...input, task]);
     }
@@ -63,7 +83,7 @@ export default function TaskSelector({ setTasks, device }) {
         //find colored variants
         const match = product.description.match(`^${device.model} ${itemName} \\((.+)\\)$`);
         if(match && match.length === 2) {
-            item[match[1].toLowerCase()] = product;
+            item[match[1]] = product;
             return true;
         }
 
@@ -96,8 +116,6 @@ export default function TaskSelector({ setTasks, device }) {
             options.push(
                 <option 
                     value={color} 
-                    data-product-id={item[color].id} 
-                    data-service-id={service.default.id} 
                     key={`${prefix}-${i}`}
                 >
                     {color}
@@ -112,13 +130,12 @@ export default function TaskSelector({ setTasks, device }) {
         return (
             <InputGroup className="m-1 d-inline-flex align-items-center w-auto">
                 <InputGroup.Text className="bg-primary text-white user-select-none">{taskName}</InputGroup.Text>
-                <Form.Select className="border-primary" id={selectId} defaultValue={device?.color?.toLowerCase()}>
+                <Form.Select className="border-primary" id={selectId} defaultValue={device?.color}>
                     {children}
                 </Form.Select>
                 <Button variant="outline-primary"
                     onClick={() => {
                         const select = document.getElementById(selectId);
-                        const option = select.querySelector(`option[value=${select.value}]`);
                         //color is used when adding additionalItem with color to line items when sending the ticket
                         //productId and serviceId are ids of prodcuts to be added as a line item when sending the ticket
                         //additionalItems is an array of string, which will hint the system to look for additional
@@ -126,10 +143,7 @@ export default function TaskSelector({ setTasks, device }) {
                         addTask(
                             {
                                 name: taskName, 
-                                color: select.value, 
-                                productId: option.getAttribute("data-product-id"),
-                                serviceId: option.getAttribute("data-service-id"),
-                                additionalItems: device.options?.[taskName]
+                                color: select.value
                             })
                     }}
                 >+</Button>
@@ -138,9 +152,6 @@ export default function TaskSelector({ setTasks, device }) {
     }
 
     const AddTaskButton = ({taskName}) => {
-        const service = products.find(product => product.description.match(`^${device.model} ${taskName} Repair$`));
-        const product = products.find(product => product.description.match(`^${device.model} ${taskName}$`));
-
         return (
             <InputGroup className="m-1 d-inline-flex align-items-center w-auto">
                 <InputGroup.Text className="bg-primary text-white user-select-none">{taskName}</InputGroup.Text>
@@ -148,10 +159,7 @@ export default function TaskSelector({ setTasks, device }) {
                     onClick={() => {
                         addTask(
                             {
-                                name: taskName, 
-                                productId: product?.id, 
-                                serviceId: service?.id, 
-                                additionalItems: device.options?.[taskName]
+                                name: taskName
                             });
                     }}
                 >+</Button>
@@ -163,13 +171,8 @@ export default function TaskSelector({ setTasks, device }) {
         const input = document.getElementById("other-task")
         const taskName = input.value;
         input.value = "";
-        const service = products.find(product => product.description.match(`^${device.model} ${taskName} Repair$`));
-        const product = products.find(product => product.description.match(`^${device.model} ${taskName}$`));
         addTask({
-            name: taskName,
-            productId: product?.id, 
-            serviceId: service?.id, 
-            additionalItems: device.options?.[taskName]
+            name: taskName
         })
     }
 
