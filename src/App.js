@@ -132,6 +132,8 @@ function App() {
 					setTasks(tasks);
 					console.log(tasks);
 				}, [])}
+				setSendingOrder={setSendingOrder}
+				sendingOrder={sendingOrder}
 			/>
 			<ProblemSelector
 				setProblems={useCallback((problems) => {

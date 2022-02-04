@@ -17,7 +17,7 @@ const CUSTOM_TASKS = [
     "Backlight",
 ];
 
-export default function TaskSelector({ setTasks, device }) {
+export default function TaskSelector({ setTasks, device, setSendingOrder, sendingOrder }) {
     //input is the list of tasks currently selected
     const [input, setInput] = useState([]);
     const [products, setProducts] = useState([]);
@@ -28,11 +28,13 @@ export default function TaskSelector({ setTasks, device }) {
         if(device.model) {
             const requestTime = Date.now();
             lastReq.current = requestTime;
+            setSendingOrder(true);
             repairshopr.queryProducts(device.model).then((results => {
                 if(lastReq.current === requestTime) {
                     setProducts(results);
                     //update all lineitems to new product ids
                     setInput(input.map(task => updateLineItems(task, results)));
+                    setSendingOrder(false);
                 }
             }))
         }
@@ -151,6 +153,7 @@ export default function TaskSelector({ setTasks, device }) {
                                 color: select.value
                             })
                     }}
+                    disabled={sendingOrder}
                 >+</Button>
             </InputGroup>
         );
@@ -167,6 +170,7 @@ export default function TaskSelector({ setTasks, device }) {
                                 name: taskName
                             });
                     }}
+                    disabled={sendingOrder}
                 >+</Button>
             </InputGroup>
         );
