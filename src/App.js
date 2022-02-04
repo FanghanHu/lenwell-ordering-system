@@ -9,6 +9,7 @@ import ProblemSelector from "./components/problem-selector";
 import Button from "react-bootstrap/Button";
 import repairshopr from "./utils/repairshopr";
 import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
 
 function App() {
 	const [customer, setCustomer] = useState({});
@@ -16,6 +17,7 @@ function App() {
 	const [tasks, setTasks] = useState([]);
 	const [problems, setProblems] = useState([]);
 	const [sendingOrder, setSendingOrder] = useState(false);
+	const [addServiceItem, setAddServiceItem] = useState(true);
 
 	const [showModal, setShowModal] = useState(false);
 	function sleep(ms) {
@@ -79,7 +81,9 @@ function App() {
 		for (const task of tasks) {
 			//add auto pricing and inventory line item to ticket
 			await addLineItemWithId(task.productId);
-			await addLineItemWithId(task.serviceId);
+			if(addServiceItem) {
+				await addLineItemWithId(task.serviceId);
+			}
 
 			//add additional item in the task
 			if (task.additionalItems?.length) {
@@ -94,7 +98,7 @@ function App() {
 								.replace("%color%", task.color ? `(${task.color})` : "")
 								.toLowerCase()
 						) {
-              await sleep(250);
+							await sleep(250);
 							await addLineItem(product);
 							break;
 						}
@@ -142,6 +146,15 @@ function App() {
 				}, [])}
 			/>
 			<div className="float-end mt-5">
+				<Form.Check
+					inline
+					type="checkbox"
+					label="Add Service item"
+					checked={addServiceItem}
+					onClick={() => {
+						setAddServiceItem(!addServiceItem);
+					}}
+				/>
 				<Button
 					variant="info"
 					size="lg"
