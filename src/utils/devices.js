@@ -56,8 +56,8 @@ const devices = {
             ["4 (A1458 A1459 A1460)", "iPad 4"],
             ["5 (A1822 A1823)", "iPad 5"],
             ["6 (A1893 A1954)", "iPad 6"],
-            ["7 (A2197 A2198 A2200)", "iPad 7", { "Glass": ['iPad 7th/8th Gen Glass %color%'] }],
-            ["8 (A2270 A2428 A2429 A2430)", "iPad 8", { "Glass": ['iPad 7th/8th Gen Glass %color%'] }],
+            ["7 (A2197 A2198 A2200)", "iPad 7", { "Glass": ['iPad 7th/8th Gen Glass %color%'], "TP": ['iPad 7/8 TP %color%'] }],
+            ["8 (A2270 A2428 A2429 A2430)", "iPad 8", { "Glass": ['iPad 7th/8th Gen Glass %color%'] , "TP": ['iPad 7/8 TP %color%'] }],
         ],
         "Apple Watch": [
             ["1 38mm", "iWatch 1 38mm", { "Glass": ["Apple Watch Glass (38mm)"], "TP": ["iWatch Series 1 38mm TP"] }],
