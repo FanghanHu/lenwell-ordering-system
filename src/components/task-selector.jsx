@@ -46,7 +46,7 @@ export default function TaskSelector({ setTasks, device }) {
     // update product line item information based on currently selected device
     const updateLineItems = (task, productsInput) => {
         if(!productsInput) productsInput = products;
-        if(task.color && task.color != 'default') {
+        if(task.color && task.color !== 'default') {
             task.productId = productsInput.find(product => product.description === `${device.model} ${task.name} (${task.color})`)?.id;
         } else {
             task.productId = productsInput.find(product => product.description === `${device.model} ${task.name}`)?.id;
