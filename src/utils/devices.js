@@ -89,7 +89,7 @@ const devices = {
             ["Note 20", "Samsung Note 20"],
             ["Note 10 Plus", "Samsung Note 10 Plus"],
             ["Note 10", "Samsung Note 10"],
-            ["Note 9", "Samsung Note9"],
+            ["Note 9", "Samsung Note 9"],
             ["Note 8", "Samsung Note 8"],
             ["Note 7", "Samsung Note 7"],
             ["Note 6", "Samsung Note 6"],
