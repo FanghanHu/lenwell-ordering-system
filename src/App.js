@@ -12,7 +12,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
 function App() {
-	const [customer, setCustomer] = useState({});
+	const [customer,  setCustomer] = useState({});
 	const [device, setDevice] = useState({});
 	const [tasks, setTasks] = useState([]);
 	const [problems, setProblems] = useState([]);
