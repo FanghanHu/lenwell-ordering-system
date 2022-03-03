@@ -13,9 +13,9 @@ function withApi(params) {
 
 function senitize(query) {
     return query
-        .replace(".", " ")
-        .replace('"', " ")
-        .replace("/", " ");
+        .replaceAll(".", " ")
+        .replaceAll('"', " ")
+        .replaceAll("/", " ");
 }
 
 function get(endpoint, params) {
