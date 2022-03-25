@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/lenwell-ordering-system/static/css/main.04179b6f.css",
-    "main.js": "/lenwell-ordering-system/static/js/main.a192eaab.js",
+    "main.js": "/lenwell-ordering-system/static/js/main.a8f31e8b.js",
     "static/js/787.be724902.chunk.js": "/lenwell-ordering-system/static/js/787.be724902.chunk.js",
     "index.html": "/lenwell-ordering-system/index.html",
     "main.04179b6f.css.map": "/lenwell-ordering-system/static/css/main.04179b6f.css.map",
-    "main.a192eaab.js.map": "/lenwell-ordering-system/static/js/main.a192eaab.js.map",
+    "main.a8f31e8b.js.map": "/lenwell-ordering-system/static/js/main.a8f31e8b.js.map",
     "787.be724902.chunk.js.map": "/lenwell-ordering-system/static/js/787.be724902.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.04179b6f.css",
-    "static/js/main.a192eaab.js"
+    "static/js/main.a8f31e8b.js"
   ]
 }
