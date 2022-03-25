@@ -36,7 +36,7 @@ const devices = {
             ["Mini 3 (A1599 A1600)", "iPad Mini 3"],
             ["Mini 4 (A1538 A1550)", "iPad Mini 4", { "Glass": ['iPad Mini 4/Mini 5 Glass %color%'] }],
             ["Mini 5 (A2124 A2126 A2133)", "iPad Mini 5", { "Glass": ['iPad Mini 4/Mini 5 Glass %color%'] }],
-            ["Mini 6 (A2567 A2568 A2569)", "iPad Mini 6"]
+            ["Mini 6 (A2567 A2568 A2569)", "iPad Mini 6"],
             ["Pro 9.7 (A1673 A1674 A1675)", 'iPad Pro 9.7"'],
             ["Pro 10.5 (A1701 A1709)", 'iPad Pro 10.5"', { "Glass": ['iPad Pro 10.5"/Air 3 Glass %color%'], "TP": ['iPad Pro 10.5"/Air 3 TP %color%'] }],
             ["Air 1 (A1474 A1475 A1476)", "iPad Air 1"],
@@ -45,7 +45,7 @@ const devices = {
             ["Air 4 (A2072 A2316 A2324 A2325)", "iPad Air 4"],
             ["Pro 11-1 (A1934 A1980 A2013)", 'iPad Pro 11" 1st Gen', { "Glass": ['iPad Pro 11.0" Glass'], "TP": ['iPad Pro 11.0" TP'], "LCD": ['iPad Pro 11.0" LCD'] }],
             ["Pro 11-2 (A2068 A2228 A2230)", 'iPad Pro 11" 2nd Gen', { "Glass": ['iPad Pro 11.0" Glass'], "TP": ['iPad Pro 11.0" TP'], "LCD": ['iPad Pro 11.0" LCD'] }],
-            ["Pro 11-3 (A2301, A2377, A2459, A2460)", 'iPad Pro 11" 3rd Gen', { "LCD": ['iPad Pro 11.0" LCD'] }],
+            ["Pro 11-3 (A2301, A2377, A2459, A2460)", 'iPad Pro 11" 3rd Gen'],
             ["Pro 12.9-1 (A1584 A1652)", 'iPad Pro 12.9" 1st Gen'],
             ["Pro 12.9-2 (A1670 A1671)", 'iPad Pro 12.9" 2nd Gen'],
             ["Pro 12.9-3 (A1876 A1895 A2014)", 'iPad Pro 12.9" 3rd Gen', { "Glass": ['iPad Pro 12.9" 3rd/4th/5th Gen Glass'], "TP": ['iPad Pro 12.9" 3rd/4th Gen TP'], "LCD": ['iPad Pro 12.9" 3rd/4th Gen LCD'] }],
@@ -59,7 +59,7 @@ const devices = {
             ["6 (A1893 A1954)", "iPad 6"],
             ["7 (A2197 A2198 A2200)", "iPad 7", { "Glass": ['iPad 7th/8th Gen Glass %color%'], "TP": ['iPad 7/8 TP %color%'] }],
             ["8 (A2270 A2428 A2429 A2430)", "iPad 8", { "Glass": ['iPad 7th/8th Gen Glass %color%'] , "TP": ['iPad 7/8 TP %color%'] }],
-            ["9 (A2602 A2603 A2604 A2605)", "iPad 9"]
+            ["9 (A2602 A2603 A2604 A2605)", "iPad 9"],
         ],
         "Apple Watch": [
             ["1 38mm", "iWatch 1 38mm", { "Glass": ["Apple Watch Glass (38mm)"], "TP": ["iWatch Series 1 38mm TP"] }],
