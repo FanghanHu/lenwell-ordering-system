@@ -84,6 +84,7 @@ const devices = {
             ["7 45mm", "iWatch 7 45mm", { "Glass": ["Apple Watch Glass (45mm)"], "TP": ["iWatch Series 7 45mm TP"] }],
         ],
         "Samsung Phone": [
+            ["S22 Ultra", "Samsung S22 Ultra"],
             ["S21 5G", "Samsung S21 5G"],
             ["S21 Ultra", "Samsung S21 Ultra"],
             ["S21 Plus", "Samsung S21 Plus"],
